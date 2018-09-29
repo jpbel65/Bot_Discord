@@ -1,0 +1,13 @@
+language: node_js
+
+install
+npm install --save discord.js
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: travis encrypt $(heroku auth:token) --add deploy.api_key
+run: "node bot.js"
+      on:
+all_branches: true
+skip_cleanup: true

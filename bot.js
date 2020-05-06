@@ -24,6 +24,9 @@ bot.on('message', async function (message) {
 });
 
 const server = http.createServer(app);
+app.get('/', function (req, res) {
+	res.json(PORT);
+});
 const wsServer = new WebSocket.server({
 	httpServer : server
 });

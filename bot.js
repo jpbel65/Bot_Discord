@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 const bot = new Discord.Client ()
 const Axios = require('axios')
-const WebSocketServer = require('websocket');
+const WebSocket = require('websocket');
 const http = require('http');
 const express = require('express')
 const app = express()
@@ -24,7 +24,9 @@ bot.on('message', async function (message) {
 });
 
 const server = http.createServer(app);
-const wsServer = new WebSocket.server({server});
+const wsServer = new WebSocket.server({
+	httpServer : server
+});
 
 wsServer.on('request', function(request) {
 	var connection = request.accept(null, request.origin);

@@ -46,6 +46,13 @@ wsServer.on('request', function(request) {
 				countReady++
 			}
 			console.log(`WebSocket message received: ${message.utf8Data} countReady: ${countReady}`);
+			if (countReady === connected.length){
+				countReady = -1;
+				connected.forEach(function (item, index, array) {
+					item.sendUTF('lets Go');
+				})
+				console.log((new Date()) + ' : lets Go ');
+			}
 		}
 	});
 	connection.on('close', function(reasonCode, description) {
@@ -57,13 +64,13 @@ wsServer.on('request', function(request) {
 	connection.timer=setInterval(function timeout() {
 		connection.ping();
 		},1000);
-	connection.timer=setInterval(function ready() {
+	/*connection.timer=setInterval(function ready() {
 		if(countReady === connected.length){
 			countReady = -1;
 			connection.sendUTF("lets Go");
 			console.log((new Date()) + ' : lets Go ');
 		}
-	},1000);
+	},1000);*/
 });
 
 server.listen(PORT, () => {

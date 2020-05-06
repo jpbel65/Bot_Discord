@@ -54,8 +54,8 @@ wsServer.on('request', function(request) {
 	connection.timer=setInterval(function ready() {
 		if(countReady === connected.length){
 			countReady = 0;
-			connection.sendUTF("let's Go");
-			console.log((new Date()) + ' : let\'s Go ');
+			connection.sendUTF("lets Go");
+			console.log((new Date()) + ' : lets Go ');
 		}
 	},1000);
 });

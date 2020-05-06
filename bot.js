@@ -17,7 +17,7 @@ bot.on('ready', ()=>{
 bot.on('message', async function (message) {
     if (`${message}`[0] === '$') {
 		console.log((new Date()) +` ${message}`.substr(1));
-		var url = `${message}`.substr(1);
+		let url = `${message}`.substr(1);
 		connected.forEach(function (item, index, array) {
 			item.sendUTF(url);
 		})
@@ -33,14 +33,20 @@ const wsServer = new WebSocket.server({
 });
 
 wsServer.on('request', function(request) {
-	var connection = request.accept(null, request.origin);
+	let connection = request.accept(null, request.origin);
 	console.log((new Date()) + ' Connection accepted.');
 	connected.push(connection);
 	console.log(connected.length);
 	connection.on('message', function incoming(message) {
-		if(message.utf8Data === 'ready' )
-			countReady++
+		if(message.utf8Data === 'ready' ){
+			if (countReady === -1){
+				countReady = 1
+			}
+			else{
+				countReady++
+			}
 			console.log(`WebSocket message received: ${message.utf8Data} countReady: ${countReady}`);
+		}
 	});
 	connection.on('close', function(reasonCode, description) {
 		console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
@@ -53,7 +59,7 @@ wsServer.on('request', function(request) {
 		},1000);
 	connection.timer=setInterval(function ready() {
 		if(countReady === connected.length){
-			countReady = 0;
+			countReady = -1;
 			connection.sendUTF("lets Go");
 			console.log((new Date()) + ' : lets Go ');
 		}

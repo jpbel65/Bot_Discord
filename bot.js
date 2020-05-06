@@ -7,6 +7,7 @@ const express = require('express')
 const app = express()
 const connected = [];
 const PORT = process.env.PORT || 8080
+let countReady = 0
 
 bot.on('ready', ()=>{
 	console.log('ready');
@@ -36,6 +37,11 @@ wsServer.on('request', function(request) {
 	console.log((new Date()) + ' Connection accepted.');
 	connected.push(connection);
 	console.log(connected.length);
+	connection.on('message', function incoming(message) {
+		if(message.utf8Data === 'ready' )
+			countReady++
+			console.log(`WebSocket message received: ${message.utf8Data} countReady: ${countReady}`);
+	});
 	connection.on('close', function(reasonCode, description) {
 		console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
 		var pos = connected.indexOf(connection)
@@ -45,6 +51,13 @@ wsServer.on('request', function(request) {
 	connection.timer=setInterval(function timeout() {
 		connection.ping();
 		},1000);
+	connection.timer=setInterval(function ready() {
+		if(countReady === connected.length){
+			countReady = 0;
+			connection.sendUTF("let's Go");
+			console.log((new Date()) + ' : let\'s Go ');
+		}
+	},1000);
 });
 
 server.listen(PORT, () => {

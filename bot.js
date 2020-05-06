@@ -1,9 +1,12 @@
 const Discord = require('discord.js')
 const bot = new Discord.Client ()
 const Axios = require('axios')
-const WebSocketServer = require('websocket').server;
+const WebSocketServer = require('websocket');
 const http = require('http');
+const express = require('express')
+const app = express()
 const connected = [];
+const PORT = process.env.PORT || 8080
 
 bot.on('ready', ()=>{
 	console.log('ready');
@@ -20,14 +23,8 @@ bot.on('message', async function (message) {
     }
 });
 
-const server = http.createServer(function(request, response) {
-});
-server.listen(8080, function() {
-	console.log((new Date()) + ' Server is listening on port 8080');
-});
-wsServer = new WebSocketServer({
-	httpServer: server,
-});
+const server = http.createServer(app);
+const wsServer = new WebSocket.server({server});
 
 wsServer.on('request', function(request) {
 	var connection = request.accept(null, request.origin);
@@ -43,6 +40,10 @@ wsServer.on('request', function(request) {
 	connection.timer=setInterval(function timeout() {
 		connection.ping();
 		},1000);
+});
+
+server.listen(PORT, () => {
+	console.log(`Server started on port ${server.address().port} :)`);
 });
 
 bot.login(process.env.BOT_TOKEN);

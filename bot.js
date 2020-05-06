@@ -39,15 +39,10 @@ wsServer.on('request', function(request) {
 	console.log(connected.length);
 	connection.on('message', function incoming(message) {
 		if(message.utf8Data === 'ready' ){
-			if (countReady === -1){
-				countReady = 1
-			}
-			else{
-				countReady++
-			}
+			countReady++
 			console.log(`WebSocket message received: ${message.utf8Data} countReady: ${countReady}`);
 			if (countReady === connected.length){
-				countReady = -1;
+				countReady = 0;
 				connected.forEach(function (item, index, array) {
 					item.sendUTF('lets Go');
 				})

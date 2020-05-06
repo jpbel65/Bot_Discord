@@ -45,7 +45,7 @@ wsServer.on('request', function(request) {
 });
 
 server.listen(PORT, () => {
-	console.log(`Server started on ${server.address()} with port ${server.address().port} :)`);
+	console.log(`Server started on ${server.address().address} with port ${server.address().port}:)`);
 });
 
 bot.login(process.env.BOT_TOKEN);

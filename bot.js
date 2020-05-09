@@ -44,9 +44,9 @@ wsServer.on('request', function(request) {
 			if (countReady === connected.length){
 				countReady = 0;
 				connected.forEach(function (item, index, array) {
-					item.sendUTF('lets Go');
+					item.sendUTF('play');
 				})
-				console.log((new Date()) + ' : lets Go ');
+				console.log((new Date()) + ' : play ');
 			}
 		}
 	});
@@ -59,13 +59,6 @@ wsServer.on('request', function(request) {
 	connection.timer=setInterval(function timeout() {
 		connection.ping();
 		},1000);
-	/*connection.timer=setInterval(function ready() {
-		if(countReady === connected.length){
-			countReady = -1;
-			connection.sendUTF("lets Go");
-			console.log((new Date()) + ' : lets Go ');
-		}
-	},1000);*/
 });
 
 server.listen(PORT, () => {

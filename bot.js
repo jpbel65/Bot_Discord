@@ -38,7 +38,7 @@ wsServer.on('request', function(request) {
 	connected.push(connection);
 	console.log(connected.length);
 	connection.on('message', function incoming(message) {
-		console.log(message)
+		console.log(message.utf8Data)
 		if(message.utf8Data === 'ready' ){
 			countReady++
 			console.log(`WebSocket message received: ${message.utf8Data} countReady: ${countReady}`);

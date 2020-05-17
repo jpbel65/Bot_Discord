@@ -56,7 +56,7 @@ wsServer.on('request', function(request) {
 		if(flux !== undefined){
 			flux.send(`LOG: ${new Date()} -: ${message.utf8Data}`)
 		}
-		if(message.utf8Data.contains('http')){
+		if((message.utf8Data).contains('http')){
 			connected.forEach(function (item, index, array) {
 				item.sendUTF(message.utf8Data);
 			})

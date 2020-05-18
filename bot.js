@@ -56,7 +56,7 @@ wsServer.on('request', function(request) {
 		if(flux !== undefined){
 			flux.send(`LOG: ${new Date()} -: ${message.utf8Data}`)
 		}
-		if(message.utf8Data == 'http'){
+		if(message.utf8Data.includes('http')){
 			connected.forEach(function (item, index, array) {
 				item.sendUTF(message.utf8Data);
 			})
@@ -94,4 +94,5 @@ server.listen(PORT, () => {
 	console.log(`Server started on ${server.address().address} with port ${server.address().port}:)`);
 });
 
-bot.login(process.env.BOT_TOKEN);
+//bot.login(process.env.BOT_TOKEN);
+bot.login('NDM5OTQ3MjE0MjYxOTc3MDkw.XrGuAw.WdpSROJZBnmeQzOoWeyrS1ogOhg');

@@ -94,5 +94,4 @@ server.listen(PORT, () => {
 	console.log(`Server started on ${server.address().address} with port ${server.address().port}:)`);
 });
 
-//bot.login(process.env.BOT_TOKEN);
-bot.login('NDM5OTQ3MjE0MjYxOTc3MDkw.XrGuAw.WdpSROJZBnmeQzOoWeyrS1ogOhg');
+bot.login(process.env.BOT_TOKEN);
